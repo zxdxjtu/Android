@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+     <ImageView
+        android:id="@+id/firstbackground"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/first_page"
+        android:src="@drawable/first"/>
+    
+	<TextView 
+        android:id="@+id/TextView"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_page" 
+        />
+	
+	<TextView 
+        android:id="@+id/InfTextView"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />
+
+</RelativeLayout>
