@@ -11,12 +11,13 @@
         android:contentDescription="@string/first_page"
         android:src="@drawable/first"/>
      
-     <ImageView
-	    android:id="@+id/imge"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/border" />
+     <LinearLayout
+	     android:id="@+id/shan" 
+	     android:layout_width="300dp"
+	     android:layout_height="300dp"
+	     android:layout_centerInParent="true"
+	     android:orientation="horizontal">
+	 </LinearLayout>
      
      <ImageView
 	    android:id="@+id/imge"
@@ -41,5 +42,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         />
+	
+	<Button
+	    android:id="@+id/button_spin"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_marginTop="450dp"
+	    android:layout_marginLeft="125dp"
+	    android:text="Click n Roll"
+	    	>
+	</Button>
 
 </RelativeLayout>
