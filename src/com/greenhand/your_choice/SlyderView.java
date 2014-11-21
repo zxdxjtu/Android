@@ -151,10 +151,10 @@ public class SlyderView	extends View {
 		float x = screenW;
 		float y = screenH/2;
 	  //这个是设置需要旋转的角度，我设置的是1080度
-	  RotateAnimation rotateAnimation = new RotateAnimation(0, 1080,x,y);
+		RotateAnimation rotateAnimation = new RotateAnimation(0, 1080,x,y);
 	  //这个是设置通话时间的
-	  rotateAnimation.setDuration(1000*4);
-	  rotateAnimation.setFillAfter(true);
-	  mView.startAnimation(rotateAnimation);
+		rotateAnimation.setDuration(1000*4);
+		rotateAnimation.setFillAfter(true);
+		mView.startAnimation(rotateAnimation);
 	 }
 }
