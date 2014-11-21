@@ -10,6 +10,20 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/first_page"
         android:src="@drawable/first"/>
+     
+     <ImageView
+	    android:id="@+id/imge"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/border" />
+     
+     <ImageView
+	    android:id="@+id/imge"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/border" />
     
 	<TextView 
         android:id="@+id/TextView"
