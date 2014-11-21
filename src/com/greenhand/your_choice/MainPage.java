@@ -1,6 +1,5 @@
 package com.greenhand.your_choice;
 
-import com.greenhand.your_choice.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,7 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,10 +32,6 @@ public class MainPage extends Activity {
 		
 		second = View.inflate(MainPage.this, R.layout.activity_second_page, null);
 		first = View.inflate(this, R.layout.activity_first_page, null);
-		
-		LinearLayout part = (LinearLayout)findViewById(R.id.shan);
-		SlyderView slyder = new SlyderView(this);
-		part.addView(slyder);
 		
 		action = (RelativeLayout)findViewById(R.id.action);
 		action.addView(first);
