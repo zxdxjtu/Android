@@ -159,9 +159,13 @@ public class AddPage extends Activity{
 			String findstr = null;		
 			String s = arg0.toString();
 			System.out.println(s);
-			map = listItem.get(pos);
-			map.put("itemEditText", s);
-			listItem.set(pos, map);
+			if(!listItem.isEmpty())
+			{
+				map = listItem.get(pos);
+				map.put("itemEditText", s);
+				listItem.set(pos, map);
+			}
+			
 			
 			if(s.isEmpty())
 			{
