@@ -118,10 +118,8 @@ public class MainPage extends Activity {
 		// TODO Auto-generated method stub
 		switch (resultCode) 
 		{   
-        	case 1:     
-        		bundle = data.getExtras();
-        		option = bundle.getParcelable("options");
-        		s = option.getString();
+        	case 1:
+        		s = data.getStringExtra("result");
         		showInf = (TextView)findViewById(R.id.InfTextView);
         		showInf.setText("您输入的选项为："+s);
             	break;  

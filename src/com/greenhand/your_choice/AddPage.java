@@ -276,7 +276,6 @@ public class AddPage extends Activity{
 				String str = (String) map.get("itemEditText");
 				list.add(str);
 			}
-//			net.sf.json.JSONArray json = net.sf.json.JSONArray.fromObject(list);
 			Gson g = new Gson();
 			String jsonstr = g.toJson(list);
 			try {
@@ -285,6 +284,10 @@ public class AddPage extends Activity{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			Intent intent = new Intent(); 
+			intent.putExtra("result",jsonstr);
+			setResult(1, intent); // 设置结果数据  
+			AddPage.this.finish(); // 关闭Activity  
 		}
 		
 	}
