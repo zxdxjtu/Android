@@ -24,13 +24,17 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class AddPage extends Activity{
 
 	private ListView inputListView;
-	private GridView chooseGridView;
+	private ListView chooseGridView;
+	private ImageButton backButton;
 	private Button addButton;
 	private ArrayList<HashMap<String, Object>> listItem;
 	private ArrayList<HashMap<String, Object>> gridItem;
@@ -39,7 +43,7 @@ public class AddPage extends Activity{
 	private SimpleAdapter myAdapter;
 	private SimpleAdapter gridAdapter;
 	private Button okButton;
-	private Button clearButton;
+//	private Button clearButton;
 	private LayoutInflater mInflater;
 	
 	@Override
@@ -49,15 +53,16 @@ public class AddPage extends Activity{
 		setContentView(R.layout.activity_add_page);
 		
 		inputListView = (ListView)findViewById(R.id.inputListView);
-		chooseGridView = (GridView)findViewById(R.id.chooseGridView);
+		chooseGridView = (ListView)findViewById(R.id.chooseGridView);
+		backButton = (ImageButton)findViewById(R.id.addPageBack);
 		addButton = (Button)findViewById(R.id.addButton);
 		okButton = (Button)findViewById(R.id.okButton);
-		clearButton = (Button)findViewById(R.id.clearButton);
+//		clearButton = (Button)findViewById(R.id.clearButton);
 		
-//		itemDeleteButton.setOnClickListener(new deleteButtonListener());
+		backButton.setOnClickListener(new backButtonListener());
 		addButton.setOnClickListener(new addButtonListener());
 		okButton.setOnClickListener(new okButtonListener());
-		clearButton.setOnClickListener(new clearButtonListener());
+//		clearButton.setOnClickListener(new clearButtonListener());
 		listItem = new ArrayList<HashMap<String, Object>>();
 		gridItem = new ArrayList<HashMap<String, Object>>();
 		
@@ -72,17 +77,16 @@ public class AddPage extends Activity{
 		gridmap = new HashMap<String, Object>();
 		gridmap.put("gridItemText", "");
 		gridItem.add(gridmap);
-		gridAdapter = new myGridAdapterclass(this, gridItem, R.layout.gridstyle,
-				new String[]{"gridItemText"}, new int[]{R.id.gridItemButton});
+		gridAdapter = new myGridAdapterclass(this, gridItem, R.layout.addpagechoosestyle1,
+				new String[]{"gridItemText"}, new int[]{R.id.addpagechoosetext});
 		chooseGridView.setAdapter(gridAdapter);
 	}
 	
 	class myGridAdapterclass extends SimpleAdapter{
 
 		int textId;
-		public myGridAdapterclass(Context context,
-				List<? extends Map<String, ?>> data, int resource,
-				String[] from, int[] to) {
+		public myGridAdapterclass(Context context,List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) 
+		{
 			super(context, data, resource, from, to);
 			// TODO Auto-generated constructor stub
 			textId = to[0];
@@ -91,8 +95,15 @@ public class AddPage extends Activity{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			convertView = mInflater.inflate(R.layout.gridstyle, null);
-			Button gridText = (Button)convertView.findViewById(textId);
+			if((position % 2) == 0)
+			{
+				convertView = mInflater.inflate(R.layout.addpagechoosestyle1, null);
+			}
+			else
+			{
+				convertView = mInflater.inflate(R.layout.addpagechoosestyle2,null);
+			}
+			TextView gridText = (TextView)convertView.findViewById(textId);
 			gridText.setOnClickListener(new gridButtonListener());
 			return super.getView(position, convertView, parent);
 		}
@@ -115,7 +126,7 @@ public class AddPage extends Activity{
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			convertView = mInflater.inflate(R.layout.edittextstyle, null);
-			Button delButton = (Button)convertView.findViewById(buttonId);
+			ImageButton delButton = (ImageButton)convertView.findViewById(buttonId);
 			EditText text = (EditText)convertView.findViewById(textId);
 			
 			text.setOnFocusChangeListener(new textFocusListener());
@@ -246,6 +257,18 @@ public class AddPage extends Activity{
 		}
 		
 	}
+	class backButtonListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			Intent t = new Intent();
+			t.setClass(AddPage.this,MainPage.class);
+			startActivity(t);
+			overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
+		}
+		
+	}
 	class deleteButtonListener implements OnClickListener{
 
 		int pos = 0;
@@ -291,15 +314,16 @@ public class AddPage extends Activity{
 		}
 		
 	}
-	class clearButtonListener implements OnClickListener{
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			DBhelper dbp = new DBhelper(AddPage.this);
-			dbp.clear();
-		}
-		
-	}
+//这里是删除数据库的代码，设置里可以用
+//	class clearButtonListener implements OnClickListener{
+//		@Override
+//		public void onClick(View arg0) {
+//			// TODO Auto-generated method stub
+//			DBhelper dbp = new DBhelper(AddPage.this);
+//			dbp.clear();
+//		}
+//		
+//	}
 	class addButtonListener implements OnClickListener{
 
 		@Override
@@ -320,7 +344,7 @@ public class AddPage extends Activity{
 			// TODO Auto-generated method stub
 			boolean havehole = false;
 			String text;
-			Button b = (Button) arg0;
+			TextView b = (TextView) arg0;
 			String changetext = (String) b.getText();
 			for(int i=0;i<listItem.size();i++)
 			{

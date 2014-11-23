@@ -98,7 +98,7 @@ public class MainPage extends Activity {
 			Intent intent = new Intent();
 			intent.setClass(MainPage.this, AddPage.class);
 			startActivityForResult(intent,0);
-			
+			overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 		}
 		
 	}

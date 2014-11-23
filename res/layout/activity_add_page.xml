@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#ffffff">
-    <ListView 
+    android:background="#f5efca">
+  	<RelativeLayout 
+  	    android:id="@+id/addpagebar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+       	android:background="@drawable/menu">
+       	<ImageButton 
+       	    android:id="@+id/addPageBack"
+       	    android:layout_width="27dp"
+       	    android:layout_height="20dp"
+       	    android:scaleType="fitXY"
+       	    android:src="@drawable/toleft"
+       	    android:layout_centerVertical="true"
+       	    android:background="#00000000"
+       	    android:layout_marginLeft="10dp"/>
+       	<TextView
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_centerInParent="true"
+       	    android:text="添加" 
+       	    android:textColor="#ffffff"
+       	    android:textSize="20dp"/>
+    </RelativeLayout>
+    
+    <ListView
+        android:layout_below="@id/addpagebar"
         android:id="@+id/inputListView"
 		android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:divider="#f5efca"
+        android:dividerHeight="10dp">
             
     </ListView>
 
     <LinearLayout 
+        android:layout_below="@id/inputListView"
+        android:id="@+id/addpagebuttonbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -22,31 +51,30 @@
 	    	android:layout_weight="1"
 	    	android:layout_width="0dp"
 	    	android:layout_height="wrap_content"
-	    	android:text="添加"/>
+	    	android:text="添加"
+	    	android:layout_marginLeft="10dp"
+	    	android:layout_marginRight="30dp"
+	    	android:background="@drawable/addpagebuttonstyle"/>
         <Button 
             android:id="@+id/okButton"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="开roll"/>
-        <Button
-            android:id="@+id/clearButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="清空"/>
+            android:text="开roll"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/addpagebuttonstyle"/>
     </LinearLayout>
 	
-	<GridView 
+	<ListView
+	    android:layout_below="@id/addpagebuttonbar"
 	    android:id="@+id/chooseGridView"
 	    android:layout_width="match_parent"
 	    android:layout_height="fill_parent"
-	    android:numColumns="auto_fit"  
-    	android:verticalSpacing="15dp"  
-    	android:horizontalSpacing="15dp"  
-    	android:columnWidth="90dp" 
-    	android:stretchMode="columnWidth"  
-    	android:gravity="center">
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:layout_marginTop="10dp"
+	    android:divider="#f5efca"
+        android:dividerHeight="10dp">
 	    
-	</GridView>
-</LinearLayout>
+	</ListView>
+</RelativeLayout>
