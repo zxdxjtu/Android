@@ -16,8 +16,7 @@
 	     android:layout_width="300dp"
 	     android:layout_height="300dp"
 	     android:layout_centerInParent="true"
-	     android:orientation="horizontal"
-	     android:background="#ff0000">
+	     android:orientation="horizontal">
 	 </LinearLayout>
      
      <ImageView
@@ -41,17 +40,6 @@
         android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        />
-	
-	<Button
-	    android:id="@+id/button_spin"
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:layout_marginTop="450dp"
-	    android:layout_marginLeft="125dp"
-	    android:text="Click n Roll"
-	    	>
-	</Button>
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

@@ -334,6 +334,8 @@ public class AddPage extends Activity{
 			map.put("itemDeleteButton", "É¾³ý");
 			listItem.add(map);
 			myAdapter.notifyDataSetChanged();
+			
+			inputListView.setSelection(inputListView.getBottom());
 		}
 		
 	}
@@ -382,7 +384,7 @@ public class AddPage extends Activity{
 					myAdapter.notifyDataSetChanged();
 				}
 			}
-			
+			inputListView.setSelection(inputListView.getBottom());
 		}
 		
 	}

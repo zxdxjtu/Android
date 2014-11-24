@@ -1,5 +1,7 @@
 package com.greenhand.your_choice;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
@@ -21,7 +23,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 
-public class SlyderView	extends View {
+public class SlyderView	extends View 
+{
 	public SlyderView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init(context);
@@ -35,9 +38,10 @@ public class SlyderView	extends View {
 	public SlyderView(Context context) {
 		super(context);
 		init(context);
-		showAnimation(this); 
+//		showAnimation(this); 
 	}
 
+	private int nowAngle;//当前角度
 	/**
 	 * 屏幕宽度
 	 */
@@ -54,13 +58,11 @@ public class SlyderView	extends View {
 	/***
 	 * 分割的文字
 	 */
-	private String[] strs = { "level1", "level2", "level3", "level4", "level5",
-			"level6"};
+	private String[] strs = { "", "", "", "", "",""};
 	/**
 	 * 分割的颜色
 	 */
-	private int[] colos = new int[] { 0xfed9c960, 0xfe57c8c8, 0xfe9fe558,
-			0xfef6b000, 0xfef46212, 0xfecf2911, 0xfe9d3011 };
+	private int[] colos = new int[] {0xfed9c960,0xfe57c8c8,0xfe9fe558,0xfef6b000,0xfef46212,0xfecf2911,0xfe9d3011 };
 	/**
 	 * 画笔
 	 */
@@ -68,8 +70,7 @@ public class SlyderView	extends View {
 	/**
 	 * 文字的大小
 	 */
-	private float textSize = TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_SP, 30, getResources().getDisplayMetrics());
+	private float textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
 	/**
 	 * 文字的颜色
 	 */
@@ -77,14 +78,11 @@ public class SlyderView	extends View {
 	/**
 	 * 园的半径
 	 */
-	private float radius = TypedValue
-			.applyDimension(TypedValue.COMPLEX_UNIT_SP, 140, getResources()
-					.getDisplayMetrics());
+	private float radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140, getResources().getDisplayMetrics());
 	/**
 	 * 画文字的距离
 	 */
-	private float textdis = TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_SP, 130, getResources().getDisplayMetrics());
+	private float textdis = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130, getResources().getDisplayMetrics());
 	/**
 	 * 圆心
 	 */
@@ -100,10 +98,9 @@ public class SlyderView	extends View {
 		paint.setAntiAlias(true);
 		paint.setStyle(Style.FILL);
 		paint.setColor(Color.WHITE);
-		screenW = (((Activity) context).getWindowManager().getDefaultDisplay()
-				.getWidth()/320)*150;
-		screenH = (((Activity) context).getWindowManager().getDefaultDisplay()
-				.getHeight()/320)*150;
+		centerX = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+		centerY = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+		nowAngle = 0;
 	}
 	/**
 	 * 绘制矩形框
@@ -113,10 +110,7 @@ public class SlyderView	extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		centerX = screenW;
-		centerY = screenH / 2;
-		oval = new RectF(centerX - radius, centerY - radius, centerX + radius,
-				centerY + radius);
+		oval = new RectF(centerX - radius, centerY - radius, centerX + radius,centerY + radius);
 		float start = 0;
 		paint.setColor(Color.rgb(0xdd, 0xdd, 0xdd));
 		paint.setAlpha(127);
@@ -148,13 +142,35 @@ public class SlyderView	extends View {
 	}
 	public void showAnimation(View mView) 
 	 {
-		float x = screenW;
-		float y = screenH/2;
+		float x = centerX;
+		float y = centerY;
 	  //这个是设置需要旋转的角度，我设置的是1080度
-		RotateAnimation rotateAnimation = new RotateAnimation(0, 1080,x,y);
+		int rand = (int) (Math.random()*360);
+		rand = 1080 + rand;
+		RotateAnimation rotateAnimation = new RotateAnimation(nowAngle,rand,x,y);
 	  //这个是设置通话时间的
 		rotateAnimation.setDuration(1000*4);
 		rotateAnimation.setFillAfter(true);
 		mView.startAnimation(rotateAnimation);
+		nowAngle = rand % 360;
 	 }
+	
+	//设置放入扇形的文字
+	public void setdrgrees(ArrayList<String> list)
+	{
+		int num = list.size();
+		drgrees = new int[num];
+		strs = new String[num];
+		for(int i=0;i<num;i++)
+		{
+			drgrees[i] = 360/num;
+			strs[i] = list.get(i);
+			if(strs[i].length() > 4)
+			{
+				strs[i] = strs[i].substring(0, 3) + "…";
+			}
+		}
+		int last = 360-drgrees[0]*num;
+		drgrees[0] = drgrees[0]+last;
+	}
 }

@@ -1,27 +1,39 @@
 package com.greenhand.your_choice;
 
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.greenhand.your_choice.SlyderView;
 import com.greenhand.your_choice.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.TypedValue;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class MainPage extends Activity {
 
 	private ImageButton buttonToRight;
 	private ImageButton buttonToLeft;
-	private Button		buttonForRoll;	//This will be deleted in the future
 	private ImageButton addButton;
+	private ImageButton setButton;
 	private RelativeLayout action;
 	private View first;
 	private View second;
@@ -29,6 +41,10 @@ public class MainPage extends Activity {
 	private Bundle bundle;
 	private Options option;
 	private String s;
+	ArrayList<String> list;
+	LinearLayout shan;
+	SlyderView slyder;
+	GestureDetector gestures;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +57,9 @@ public class MainPage extends Activity {
 		action = (RelativeLayout)findViewById(R.id.action);
 		action.addView(first);
 		
-		LinearLayout part = (LinearLayout)findViewById(R.id.shan);
-		SlyderView slyder = new SlyderView(this);
-		part.addView(slyder);
+		shan = (LinearLayout)findViewById(R.id.shan);
+		slyder = new SlyderView(this);
+		shan.addView(slyder);
 		
 		showInf = (TextView)findViewById(R.id.InfTextView);
 		showInf.setText("您输入的选项为："+s);
@@ -54,13 +70,40 @@ public class MainPage extends Activity {
 		buttonToLeft = (ImageButton)findViewById(R.id.buttonToLeft);
 		buttonToLeft.setOnClickListener(new ButtonListenerToLeft());
 		
-		buttonForRoll = (Button)findViewById(R.id.button_spin);
-		buttonForRoll.setOnClickListener(new ButtonListenerForRoll(slyder));
-		
 		addButton = (ImageButton)findViewById(R.id.addButton);
-		addButton.setOnClickListener(new ButtonListenerAdd());				
+		addButton.setOnClickListener(new ButtonListenerAdd());	
+		
+		setButton = (ImageButton)findViewById(R.id.setButton);
+		setButton.setOnClickListener(new ButtonListenerSet());	//暂时将设置按钮用作数据库的清空按钮
+		
+		gestures = new GestureDetector(this,new turnTableListener());
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		return gestures.onTouchEvent(event);
+	}
+
+	class turnTableListener extends SimpleOnGestureListener{
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			// TODO Auto-generated method stub
+			float centerx = (getWindowManager().getDefaultDisplay().getWidth())/2;
+			float centery = (getWindowManager().getDefaultDisplay().getHeight())/2;
+			float r = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+			float xleft = centerx - r;
+			float xright = centerx + r;
+			float ytop = centery - r;
+			float ybottom = centery + r;
+			if((xleft < e1.getX()) && (e1.getX()<xright) && (e1.getY() > ytop) && (e1.getY() < ybottom))
+			{
+				slyder.showAnimation(slyder);
+			}
+			return super.onFling(e1, e2, velocityX, velocityY);
+		}
+	}
 	class ButtonListenerToRight implements OnClickListener
 	{
 
@@ -102,6 +145,17 @@ public class MainPage extends Activity {
 		}
 		
 	}
+	
+	//暂时将设置按钮用作数据库的清空按钮
+	class ButtonListenerSet implements OnClickListener{
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			DBhelper dbp = new DBhelper(MainPage.this);
+			dbp.clear();
+		}
+	}
+	
 	class ButtonListenerForRoll implements OnClickListener{
 		SlyderView tmp;
 		public ButtonListenerForRoll(SlyderView slyder) {
@@ -122,6 +176,14 @@ public class MainPage extends Activity {
         		s = data.getStringExtra("result");
         		showInf = (TextView)findViewById(R.id.InfTextView);
         		showInf.setText("您输入的选项为："+s);
+        		if(s != null)
+        		{
+        			Gson gson = new Gson();
+        			list = gson.fromJson(s, new TypeToken<ArrayList<String>>(){}.getType());
+        			slyder.setdrgrees(list);
+        		}
+//        		shan.removeAllViews();
+//        		shan.addView(slyder);
             	break;  
         	default:  
         		break;  

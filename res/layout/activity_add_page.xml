@@ -42,6 +42,7 @@
 
     <LinearLayout 
         android:layout_below="@id/inputListView"
+        android:layout_marginTop="10dp"
         android:id="@+id/addpagebuttonbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
