@@ -259,6 +259,7 @@ public class AddPage extends Activity{
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			AddPage.this.finish();
+			overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
 		}
 		
 	}
@@ -304,6 +305,7 @@ public class AddPage extends Activity{
 			intent.putExtra("result",jsonstr);
 			setResult(1, intent); // 设置结果数据  
 			AddPage.this.finish(); // 关闭Activity  
+			overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
 		}
 		
 	}
