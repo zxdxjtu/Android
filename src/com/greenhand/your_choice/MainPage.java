@@ -9,23 +9,18 @@ import com.greenhand.your_choice.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.TypedValue;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class MainPage extends Activity {
@@ -38,8 +33,6 @@ public class MainPage extends Activity {
 	private View first;
 	private View second;
 	private TextView showInf;
-	private Bundle bundle;
-	private Options option;
 	private String s;
 	ArrayList<String> list;
 	LinearLayout shan;
@@ -68,6 +61,7 @@ public class MainPage extends Activity {
 		buttonToRight.setOnClickListener(new ButtonListenerToRight());
 		
 		buttonToLeft = (ImageButton)findViewById(R.id.buttonToLeft);
+		buttonToLeft.setImageDrawable(getResources().getDrawable(R.drawable.toleft1));
 		buttonToLeft.setOnClickListener(new ButtonListenerToLeft());
 		
 		addButton = (ImageButton)findViewById(R.id.addButton);
@@ -110,6 +104,8 @@ public class MainPage extends Activity {
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
+			buttonToLeft.setImageDrawable(getResources().getDrawable(R.drawable.toleft));
+			buttonToRight.setImageDrawable(getResources().getDrawable(R.drawable.toright1));
 			action.removeAllViews();
 			action.addView(second);
 			showInf = (TextView)findViewById(R.id.InfTextView);
@@ -124,6 +120,8 @@ public class MainPage extends Activity {
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
+			buttonToLeft.setImageDrawable(getResources().getDrawable(R.drawable.toleft1));
+			buttonToRight.setImageDrawable(getResources().getDrawable(R.drawable.toright));
 			action.removeAllViews();
 			action.addView(first);
 			showInf = (TextView)findViewById(R.id.InfTextView);

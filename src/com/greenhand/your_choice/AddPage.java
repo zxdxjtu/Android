@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -23,10 +21,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -262,10 +258,7 @@ public class AddPage extends Activity{
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			Intent t = new Intent();
-			t.setClass(AddPage.this,MainPage.class);
-			startActivity(t);
-			overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
+			AddPage.this.finish();
 		}
 		
 	}
