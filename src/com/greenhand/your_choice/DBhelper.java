@@ -11,13 +11,10 @@ import com.google.gson.reflect.TypeToken;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBhelper{
 
 	private static final String DATABASE_NAME = "DBforChoice.db";  
-	private static final int DATABASE_VERSION = 1;
 	SQLiteDatabase db; 
 	DBhelper(Context context){
 		db = context.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE,null); 
@@ -51,7 +48,6 @@ public class DBhelper{
 		String element;
 		String element2;
 		JSONArray sumjson;
-		JSONArray tempjson;
 		boolean check = false;
 		Gson gson = new Gson();
 		ArrayList<String> list = gson.fromJson(s, new TypeToken<ArrayList<String>>(){}.getType());

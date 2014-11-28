@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.greenhand.your_choice.SlyderView;
 import com.greenhand.your_choice.R;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +19,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,10 +38,12 @@ public class MainPage extends Activity {
 	private View second;
 	private TextView showInf;
 	private String s;
-	ArrayList<String> list;
-	LinearLayout shan;
-	SlyderView slyder;
-	GestureDetector gestures;
+	private ArrayList<String> list;
+	private LinearLayout shan;
+	private SlyderView slyder;
+	private GestureDetector gestures;
+	
+	private int nowAngle;//当前角度
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,9 @@ public class MainPage extends Activity {
 		setButton = (ImageButton)findViewById(R.id.setButton);
 		setButton.setOnClickListener(new ButtonListenerSet());	//暂时将设置按钮用作数据库的清空按钮
 		
-		gestures = new GestureDetector(this,new turnTableListener());
+		gestures = new GestureDetector(new turnTableListener());
+		
+		nowAngle = 0;
 	}
 
 	@Override
@@ -79,10 +87,13 @@ public class MainPage extends Activity {
 		return gestures.onTouchEvent(event);
 	}
 
+	class fakeGestureListener extends SimpleOnGestureListener{
+		
+	}
 	class turnTableListener extends SimpleOnGestureListener{
 		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-				float velocityY) {
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float velocityY) 
+		{
 			// TODO Auto-generated method stub
 			float centerx = (getWindowManager().getDefaultDisplay().getWidth())/2;
 			float centery = (getWindowManager().getDefaultDisplay().getHeight())/2;
@@ -91,12 +102,55 @@ public class MainPage extends Activity {
 			float xright = centerx + r;
 			float ytop = centery - r;
 			float ybottom = centery + r;
-			if((xleft < e1.getX()) && (e1.getX()<xright) && (e1.getY() > ytop) && (e1.getY() < ybottom))
+			if(e1 != null)//防止出现连续转太快，e1空的莫名bug
 			{
-				slyder.showAnimation(slyder);
+				if((xleft < e1.getX()) && (e1.getX()<xright) && (e1.getY() > ytop) && (e1.getY() < ybottom))
+				{
+					float x = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+					float y = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+					int rand = (int) (Math.random()*360);
+					rand = 1080 + rand;
+					RotateAnimation rotateAnimation = new RotateAnimation(nowAngle,rand,x,y);
+				  //这个是设置时间的
+					rotateAnimation.setDuration(1000*4);
+					rotateAnimation.setFillAfter(true);
+					rotateAnimation.setAnimationListener(new rotateAnimListener());
+					shan.startAnimation(rotateAnimation);
+					nowAngle = rand % 360;
+				}
 			}
 			return super.onFling(e1, e2, velocityX, velocityY);
 		}
+	}
+	class rotateAnimListener implements AnimationListener{
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub
+			gestures = new GestureDetector(new turnTableListener());
+			if(list != null)
+			{
+				int angle = 360 - nowAngle - 90;
+				if(angle<0)
+					angle = angle + 360;
+				int pos = angle/(360/list.size());
+			
+				System.out.println("最终指向" + list.get(pos) + " angle" + angle + " nowangle" + nowAngle);
+			}
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
+			gestures = new GestureDetector(new fakeGestureListener());
+		}
+		
 	}
 	class ButtonListenerToRight implements OnClickListener
 	{
@@ -153,17 +207,6 @@ public class MainPage extends Activity {
 			dbp.clear();
 		}
 	}
-	
-	class ButtonListenerForRoll implements OnClickListener{
-		SlyderView tmp;
-		public ButtonListenerForRoll(SlyderView slyder) {
-			tmp = slyder;
-		}
-		public void onClick(View arg0){
-			tmp.showAnimation(tmp);
-		}
-	}
-	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

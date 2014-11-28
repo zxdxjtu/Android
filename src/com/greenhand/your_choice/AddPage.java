@@ -18,7 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 
 public class AddPage extends Activity{
 
+	private TextView warning;
 	private ListView inputListView;
 	private ListView chooseGridView;
 	private ImageButton backButton;
@@ -48,6 +52,7 @@ public class AddPage extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_page);
 		
+		warning = (TextView)findViewById(R.id.addpagewarning);
 		inputListView = (ListView)findViewById(R.id.inputListView);
 		chooseGridView = (ListView)findViewById(R.id.chooseGridView);
 		backButton = (ImageButton)findViewById(R.id.addPageBack);
@@ -63,16 +68,12 @@ public class AddPage extends Activity{
 		gridItem = new ArrayList<HashMap<String, Object>>();
 		
 		map = new HashMap<String, Object>();
-		map.put("itemEditText", "请输入让您纠结的选项");
-		map.put("itemDeleteButton", "删除");
+		map.put("itemEditText", "");
 		listItem.add(map);
 		myAdapter = new myAdapterclass(this, listItem, R.layout.edittextstyle, 
 				new String[]{"itemEditText","itemDeleteButton"} ,new int[]{R.id.itemEditText ,R.id.itemDeleteButton});
 		inputListView.setAdapter(myAdapter);
 		
-		gridmap = new HashMap<String, Object>();
-		gridmap.put("gridItemText", "");
-		gridItem.add(gridmap);
 		gridAdapter = new myGridAdapterclass(this, gridItem, R.layout.addpagechoosestyle1,
 				new String[]{"gridItemText"}, new int[]{R.id.addpagechoosetext});
 		chooseGridView.setAdapter(gridAdapter);
@@ -108,14 +109,12 @@ public class AddPage extends Activity{
 	class myAdapterclass extends SimpleAdapter{
 
 		int buttonId,textId;
-		public myAdapterclass(Context context,
-				List<? extends Map<String, ?>> data, int resource,
-				String[] from, int[] to) {
+		public myAdapterclass(Context context,List<? extends Map<String, ?>> data, int resource,String[] from, int[] to) 
+		{
 			super(context, data, resource, from, to);
 			// TODO Auto-generated constructor stub
 			textId = to[0];
 			buttonId = to[1];
-//			System.out.println(buttonId);
 			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		@Override
@@ -125,28 +124,13 @@ public class AddPage extends Activity{
 			ImageButton delButton = (ImageButton)convertView.findViewById(buttonId);
 			EditText text = (EditText)convertView.findViewById(textId);
 			
-			text.setOnFocusChangeListener(new textFocusListener());
+//			text.setOnFocusChangeListener(new textFocusListener());
 			text.addTextChangedListener(new textListener(position));
 			delButton.setOnClickListener(new deleteButtonListener(position));
 			
 			return super.getView(position, convertView, parent);
 			
 		}
-	}
-	class textFocusListener implements OnFocusChangeListener{
-
-		@Override
-		public void onFocusChange(View arg0, boolean arg1) {
-			// TODO Auto-generated method stub
-			if(arg1)
-			{
-				String str = (((EditText)arg0).getText()).toString();
-				String yuan = "请输入让您纠结的选项";
-				if(str.equals(yuan))
-					((EditText)arg0).setText("");
-			}
-		}
-		
 	}
 	class textListener implements TextWatcher{
 
@@ -171,9 +155,7 @@ public class AddPage extends Activity{
 				map = listItem.get(pos);
 				map.put("itemEditText", s);
 				listItem.set(pos, map);
-			}
-			
-			
+			}		
 			if(s.isEmpty())
 			{
 				list = dbp.searchhot();
@@ -274,7 +256,6 @@ public class AddPage extends Activity{
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-//			System.out.println(pos);
 			listItem.remove(pos);
 			myAdapter.notifyDataSetChanged();
 		}
@@ -285,27 +266,68 @@ public class AddPage extends Activity{
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			DBhelper dbp = new DBhelper(AddPage.this);
-			ArrayList<String> list = new ArrayList<String>(); 
-			for(int i=0;i<listItem.size();i++)
+			map = listItem.get(0);
+			String str = (String) map.get("itemEditText");
+			if(!listItem.isEmpty() && !str.equals(""))
 			{
-				map = listItem.get(i);
-				String str = (String) map.get("itemEditText");
-				list.add(str);
+				DBhelper dbp = new DBhelper(AddPage.this);
+				ArrayList<String> list = new ArrayList<String>(); 
+				for(int i=0;i<listItem.size();i++)
+				{
+					map = listItem.get(i);
+					str = (String) map.get("itemEditText");
+					if(!str.equals(""))
+						list.add(str);
+				}
+				Gson g = new Gson();
+				String jsonstr = g.toJson(list);
+				try {
+					dbp.save(jsonstr);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Intent intent = new Intent(); 
+				intent.putExtra("result",jsonstr);
+				setResult(1, intent); // 设置结果数据  
+				AddPage.this.finish(); // 关闭Activity  
+				overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
 			}
-			Gson g = new Gson();
-			String jsonstr = g.toJson(list);
-			try {
-				dbp.save(jsonstr);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			else
+			{
+				warning.setVisibility(View.VISIBLE);
+				AnimationSet animationSet = new AnimationSet(true);
+		        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+		        alphaAnimation.setDuration(500);
+		        animationSet.addAnimation(alphaAnimation);
+		        AlphaAnimation alphaAnimation2 = new AlphaAnimation(1, 0);
+		        alphaAnimation2.setDuration(1000);
+		        alphaAnimation2.setStartOffset(1000);
+		        animationSet.addAnimation(alphaAnimation2);		        
+		        animationSet.setAnimationListener(new warningAnimListener());
+		        warning.startAnimation(animationSet);
 			}
-			Intent intent = new Intent(); 
-			intent.putExtra("result",jsonstr);
-			setResult(1, intent); // 设置结果数据  
-			AddPage.this.finish(); // 关闭Activity  
-			overridePendingTransition(R.anim.push_back_in,R.anim.push_back_out);
+		}
+		
+	}
+	class warningAnimListener implements AnimationListener{
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub
+			warning.setVisibility(View.GONE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
@@ -325,8 +347,7 @@ public class AddPage extends Activity{
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			map = new HashMap<String, Object>();
-			map.put("itemEditText", "请输入让您纠结的选项");
-			map.put("itemDeleteButton", "删除");
+			map.put("itemEditText", "");
 			listItem.add(map);
 			myAdapter.notifyDataSetChanged();
 			
@@ -346,13 +367,11 @@ public class AddPage extends Activity{
 			for(int i=0;i<listItem.size();i++)
 			{
 				text = (String) (listItem.get(i)).get("itemEditText");
-				if(text.equals("") || text.equals("请输入让您纠结的选项"))
+				if(text.equals(""))
 				{
 					havehole = true;
-//					System.out.println("你完蛋啦");
 					map = new HashMap<String, Object>();
 					map.put("itemEditText", changetext);
-					map.put("itemDeleteButton", "删除");
 					listItem.set(i, map);
 					myAdapter.notifyDataSetChanged();
 					break;
@@ -374,7 +393,6 @@ public class AddPage extends Activity{
 				{
 					map = new HashMap<String, Object>();
 					map.put("itemEditText", changetext);
-					map.put("itemDeleteButton", "删除");
 					listItem.add(map);
 					myAdapter.notifyDataSetChanged();
 				}

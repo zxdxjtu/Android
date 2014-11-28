@@ -2,22 +2,12 @@ package com.greenhand.your_choice;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.EmbossMaskFilter;
-import android.graphics.MaskFilter;
 import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Paint.Style;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.Path;
-import android.graphics.RadialGradient;
 import android.graphics.RectF;
-import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -38,19 +28,8 @@ public class SlyderView	extends View
 	public SlyderView(Context context) {
 		super(context);
 		init(context);
-//		showAnimation(this); 
 	}
 
-	private int nowAngle;//当前角度
-	/**
-	 * 屏幕宽度
-	 */
-	private int screenW;
-
-	/**
-	 * 屏幕的高度
-	 */
-	private int screenH;
 	/**
 	 * 分割的度数
 	 */
@@ -91,16 +70,18 @@ public class SlyderView	extends View
 	 * 圆心
 	 */
 	private float centerY;
+	
+	RotateAnimation rotateAnimation;
 
-	@SuppressWarnings("deprecation")
-	private void init(Context context) {
+	private void init(Context context) 
+	{
 		paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setStyle(Style.FILL);
 		paint.setColor(Color.WHITE);
 		centerX = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
 		centerY = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
-		nowAngle = 0;
+//		nowAngle = 0;
 	}
 	/**
 	 * 绘制矩形框
@@ -140,20 +121,21 @@ public class SlyderView	extends View
 		}
 		int saveCount = canvas.save();
 	}
-	public void showAnimation(View mView) 
-	 {
-		float x = centerX;
-		float y = centerY;
-	  //这个是设置需要旋转的角度，我设置的是1080度
-		int rand = (int) (Math.random()*360);
-		rand = 1080 + rand;
-		RotateAnimation rotateAnimation = new RotateAnimation(nowAngle,rand,x,y);
-	  //这个是设置通话时间的
-		rotateAnimation.setDuration(1000*4);
-		rotateAnimation.setFillAfter(true);
-		mView.startAnimation(rotateAnimation);
-		nowAngle = rand % 360;
-	 }
+//	public void showAnimation(View mView) 
+//	 {
+//		float x = centerX;
+//		float y = centerY;
+//	  //这个是设置需要旋转的角度，我设置的是1080度
+//		int rand = (int) (Math.random()*360);
+//		rand = 1080 + rand;
+//		rotateAnimation = new RotateAnimation(nowAngle,rand,x,y);
+//	  //这个是设置通话时间的
+//		rotateAnimation.setDuration(1000*4);
+//		rotateAnimation.setFillAfter(true);
+//		mView.startAnimation(rotateAnimation);
+//		nowAngle = rand % 360;
+//		
+//	 }
 	
 	//设置放入扇形的文字
 	public void setdrgrees(ArrayList<String> list)
@@ -171,6 +153,9 @@ public class SlyderView	extends View
 			}
 		}
 		int last = 360-drgrees[0]*num;
-		drgrees[0] = drgrees[0]+last;
+		for(int i=0;i<last;i++)
+		{
+			drgrees[i]++;
+		}
 	}
 }
