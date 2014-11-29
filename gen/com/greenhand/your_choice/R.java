@@ -11,6 +11,10 @@ public final class R {
     public static final class anim {
         public static final int in_from_right=0x7f040000;
         public static final int out_to_left=0x7f040001;
+        public static final int push_back_in=0x7f040002;
+        public static final int push_back_out=0x7f040003;
+        public static final int push_up_in=0x7f040004;
+        public static final int push_up_out=0x7f040005;
     }
     public static final class attr {
     }
@@ -26,40 +30,78 @@ public final class R {
     }
     public static final class drawable {
         public static final int addbutton=0x7f020000;
-        public static final int border=0x7f020001;
-        public static final int first=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int login=0x7f020004;
-        public static final int menu=0x7f020005;
-        public static final int navigation=0x7f020006;
-        public static final int option=0x7f020007;
-        public static final int second=0x7f020008;
-        public static final int setbutton=0x7f020009;
-        public static final int toleft=0x7f02000a;
-        public static final int toright=0x7f02000b;
+        public static final int addpagebuttonnormal=0x7f020001;
+        public static final int addpagebuttonpressed=0x7f020002;
+        public static final int addpagebuttonstyle=0x7f020003;
+        public static final int addpagechoose1corners=0x7f020004;
+        public static final int addpagechoose1part=0x7f020005;
+        public static final int addpagechoose2corners=0x7f020006;
+        public static final int addpagechoose2part=0x7f020007;
+        public static final int addpagedel=0x7f020008;
+        public static final int addpageinputborder=0x7f020009;
+        public static final int border=0x7f02000a;
+        public static final int dialogbar=0x7f02000b;
+        public static final int dialogbg=0x7f02000c;
+        public static final int first=0x7f02000d;
+        public static final int ic_launcher=0x7f02000e;
+        public static final int login=0x7f02000f;
+        public static final int menu=0x7f020010;
+        public static final int navigation=0x7f020011;
+        public static final int renren_android_title_bg=0x7f020012;
+        public static final int renren_android_title_logo=0x7f020013;
+        public static final int renren_connect=0x7f020014;
+        public static final int renren_login_button=0x7f020015;
+        public static final int renren_login_button_down=0x7f020016;
+        public static final int renren_login_button_up=0x7f020017;
+        public static final int renren_logout_button=0x7f020018;
+        public static final int renren_logout_button_down=0x7f020019;
+        public static final int renren_logout_button_up=0x7f02001a;
+        public static final int second=0x7f02001b;
+        public static final int setbutton=0x7f02001c;
+        public static final int toleft=0x7f02001d;
+        public static final int toleft1=0x7f02001e;
+        public static final int toright=0x7f02001f;
+        public static final int toright1=0x7f020020;
     }
     public static final class id {
-        public static final int InfTextView=0x7f090008;
-        public static final int TextView=0x7f090007;
-        public static final int action=0x7f09000f;
-        public static final int action_settings=0x7f090014;
-        public static final int addButton=0x7f090001;
-        public static final int buttonToLeft=0x7f09000e;
-        public static final int buttonToRight=0x7f09000d;
-        public static final int chooseGridView=0x7f090004;
-        public static final int clearButton=0x7f090003;
-        public static final int firstbackground=0x7f090005;
-        public static final int gridItemButton=0x7f090013;
-        public static final int imge=0x7f090006;
-        public static final int inputListView=0x7f090000;
-        public static final int itemDeleteButton=0x7f090012;
-        public static final int itemEditText=0x7f090011;
-        public static final int itemkuangjia=0x7f090010;
-        public static final int leftline=0x7f090009;
-        public static final int menuPic=0x7f09000a;
-        public static final int naviPic=0x7f09000c;
-        public static final int okButton=0x7f090002;
-        public static final int setButton=0x7f09000b;
+        public static final int InfTextView=0x7f09000c;
+        public static final int TextView=0x7f09000b;
+        public static final int action=0x7f090013;
+        public static final int action_settings=0x7f090025;
+        public static final int addButton=0x7f090004;
+        public static final int addPageBack=0x7f090001;
+        public static final int addpagebar=0x7f090000;
+        public static final int addpagebuttonbar=0x7f090003;
+        public static final int addpagechoose2part=0x7f090015;
+        public static final int addpagechoosetext=0x7f090014;
+        public static final int addpagewarning=0x7f090007;
+        public static final int btn_login=0x7f09001c;
+        public static final int btn_logout=0x7f09001d;
+        public static final int btn_select_image=0x7f090018;
+        public static final int btn_send_status=0x7f090017;
+        public static final int btn_upload_image=0x7f090019;
+        public static final int buttonToLeft=0x7f090012;
+        public static final int buttonToRight=0x7f090011;
+        public static final int chooseGridView=0x7f090006;
+        public static final int dialogcancel=0x7f090023;
+        public static final int dialogmessage=0x7f090022;
+        public static final int dialogmessagefield=0x7f090021;
+        public static final int dialogok=0x7f090024;
+        public static final int et_description=0x7f09001a;
+        public static final int et_status=0x7f090016;
+        public static final int firstbackground=0x7f090008;
+        public static final int imge=0x7f09000a;
+        public static final int inputListView=0x7f090002;
+        public static final int itemDeleteButton=0x7f090020;
+        public static final int itemEditText=0x7f09001f;
+        public static final int itemkuangjia=0x7f09001e;
+        public static final int iv_select_image=0x7f09001b;
+        public static final int leftline=0x7f09000d;
+        public static final int menuPic=0x7f09000e;
+        public static final int naviPic=0x7f090010;
+        public static final int okButton=0x7f090005;
+        public static final int setButton=0x7f09000f;
+        public static final int shan=0x7f090009;
     }
     public static final class layout {
         public static final int activity_add_page=0x7f030000;
@@ -67,8 +109,11 @@ public final class R {
         public static final int activity_login=0x7f030002;
         public static final int activity_main_page=0x7f030003;
         public static final int activity_second_page=0x7f030004;
-        public static final int edittextstyle=0x7f030005;
-        public static final int gridstyle=0x7f030006;
+        public static final int addpagechoosestyle1=0x7f030005;
+        public static final int addpagechoosestyle2=0x7f030006;
+        public static final int demo=0x7f030007;
+        public static final int edittextstyle=0x7f030008;
+        public static final int result_dialog=0x7f030009;
     }
     public static final class menu {
         public static final int main_page=0x7f080000;
@@ -95,17 +140,6 @@ public final class R {
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 

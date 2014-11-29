@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.greenhand.your_choice.SlyderView;
-import com.greenhand.your_choice.R;
+import com.renren.api.connect.android.Renren;
+import com.renren.api.connect.android.exception.RenrenAuthError;
+import com.renren.api.connect.android.view.RenrenAuthListener;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -28,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainPage extends Activity {
 
@@ -48,12 +52,19 @@ public class MainPage extends Activity {
 	private int nowAngle;//当前角度
 	private String dialogMessage;
 	AlertDialog mydialog;
+	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
+
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);			
 		setContentView(R.layout.activity_main_page);
+	//////////////////////////////////////////////////
+	
+		renren.restorSessionKey(this);
 		
+		/////////////////////////////////////////////////
 		second = View.inflate(MainPage.this, R.layout.activity_second_page, null);
 		first = View.inflate(this, R.layout.activity_first_page, null);
 		
@@ -305,6 +316,46 @@ public class MainPage extends Activity {
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			//分享的代码
+	
+			Toast.makeText(MainPage.this, "renren is"+renren, Toast.LENGTH_SHORT).show();
+			
+			if (renren.isSessionKeyValid()==false) {
+				renren.authorize(MainPage.this, new String[]{"status_update","photo_upload"},new RenrenAuthListener(){
+					@Override
+					public void onComplete(Bundle values) {
+						Bundle bundle=new Bundle();
+						bundle.putString("method", "status.set");
+						bundle.putString("status",dialogMessage);
+						renren.requestJSON(bundle);
+						Toast.makeText(MainPage.this, "onComplete", Toast.LENGTH_SHORT).show();
+					}
+					@Override
+					public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
+						Toast.makeText(MainPage.this, "onRenrenAuthError", Toast.LENGTH_SHORT).show();
+						System.out.println(renrenAuthError.getError()+renrenAuthError.getMessage()+renrenAuthError.getErrorDescription()+renrenAuthError.getLocalizedMessage());
+					}
+					@Override
+					public void onCancelLogin() {
+						Toast.makeText(MainPage.this, "onCancelLogin", Toast.LENGTH_SHORT).show();
+					}
+					@Override
+					public void onCancelAuth(Bundle values) {
+						Toast.makeText(MainPage.this, "onCancelAuth", Toast.LENGTH_SHORT).show();
+					}
+				});
+				
+			
+				
+			}
+			else
+			{
+				Bundle bundle=new Bundle();
+				bundle.putString("method", "status.set");
+				bundle.putString("status",dialogMessage);
+				renren.requestJSON(bundle);
+			}
+			
+			
 		}
 		
 	}
