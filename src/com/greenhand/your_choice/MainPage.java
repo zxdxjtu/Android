@@ -19,9 +19,11 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +46,8 @@ public class MainPage extends Activity {
 	private GestureDetector gestures;
 	
 	private int nowAngle;//当前角度
+	private String dialogMessage;
+	AlertDialog mydialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +138,9 @@ public class MainPage extends Activity {
 				if(angle<0)
 					angle = angle + 360;
 				int pos = angle/(360/list.size());
-			
-				System.out.println("最终指向" + list.get(pos) + " angle" + angle + " nowangle" + nowAngle);
+				dialogMessage = list.get(pos);
+//				System.out.println("最终指向" + list.get(pos) + " angle" + angle + " nowangle" + nowAngle);
+				showdialog();//弹出提示框，代码在最后一行
 			}
 		}
 
@@ -269,6 +274,39 @@ public class MainPage extends Activity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		System.exit(0);
+	}
+	
+	//提示框的代码
+	private void showdialog()
+	{
+		mydialog = new AlertDialog.Builder(this).create();
+		mydialog.show();
+		Window dialogwindow = mydialog.getWindow();
+		dialogwindow.setContentView(R.layout.result_dialog);
+		Button ok = (Button)dialogwindow.findViewById(R.id.dialogok);
+		Button cancel = (Button)dialogwindow.findViewById(R.id.dialogcancel);
+		TextView message = (TextView)dialogwindow.findViewById(R.id.dialogmessage);
+		message.setText(dialogMessage);	
+		ok.setOnClickListener(new dialogOkListener());
+		cancel.setOnClickListener(new dialogCancelListener());
+	}
+	class dialogCancelListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			mydialog.dismiss();
+		}
+		
+	}
+	class dialogOkListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			//分享的代码
+		}
+		
 	}
 
 }

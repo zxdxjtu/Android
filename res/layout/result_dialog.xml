@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+    <LinearLayout 
+        android:id="@+id/dialogmessagefield"
+        android:layout_marginTop="28dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialogbg"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="哇咔咔！我帮你选中了"/>
+        <TextView 
+            android:id="@+id/dialogmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享一下吧~"/>
+        <LinearLayout 
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/dialogmessagefield"
+        	android:orientation="horizontal"
+        	android:gravity="center_horizontal">
+        	<Button 
+            	android:id="@+id/dialogcancel"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="亚美爹"/>
+        	<Button 
+        	    android:id="@+id/dialogok"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:text="一哭搜"/>
+    	</LinearLayout>
+    </LinearLayout>
+    <ImageView 
+        android:layout_width="200dp"
+        android:layout_height="58dp"
+        android:src="@drawable/dialogbar"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
