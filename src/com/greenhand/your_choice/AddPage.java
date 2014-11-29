@@ -156,7 +156,7 @@ public class AddPage extends Activity{
 				map.put("itemEditText", s);
 				listItem.set(pos, map);
 			}		
-			if(s.isEmpty())
+			if(s.length()==0)
 			{
 				list = dbp.searchhot();
 				if(list != null)
