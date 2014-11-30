@@ -77,18 +77,4 @@
 	    android:divider="#f5efca"
         android:dividerHeight="10dp">    
 	</ListView>
-	
-	<TextView 
-	    android:id="@+id/addpagewarning"
-	    android:layout_below="@id/addpagebar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="请输入选项再roll"
-        android:layout_centerHorizontal="true"
-        android:textSize="18dp"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:background="#507e7e7e"
-        android:padding="5dp"
-        android:visibility="gone"/>
 </RelativeLayout>

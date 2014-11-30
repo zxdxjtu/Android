@@ -14,20 +14,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddPage extends Activity{
 
@@ -52,7 +52,6 @@ public class AddPage extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_page);
 		
-		warning = (TextView)findViewById(R.id.addpagewarning);
 		inputListView = (ListView)findViewById(R.id.inputListView);
 		chooseGridView = (ListView)findViewById(R.id.chooseGridView);
 		backButton = (ImageButton)findViewById(R.id.addPageBack);
@@ -266,9 +265,8 @@ public class AddPage extends Activity{
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			map = listItem.get(0);
-			String str = (String) map.get("itemEditText");
-			if(!listItem.isEmpty() && !str.equals(""))
+			String str;
+			if(!listItem.isEmpty() && !(listItem.get(0).get("itemEditText")).equals(""))
 			{
 				DBhelper dbp = new DBhelper(AddPage.this);
 				ArrayList<String> list = new ArrayList<String>(); 
@@ -295,17 +293,9 @@ public class AddPage extends Activity{
 			}
 			else
 			{
-				warning.setVisibility(View.VISIBLE);
-				AnimationSet animationSet = new AnimationSet(true);
-		        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-		        alphaAnimation.setDuration(500);
-		        animationSet.addAnimation(alphaAnimation);
-		        AlphaAnimation alphaAnimation2 = new AlphaAnimation(1, 0);
-		        alphaAnimation2.setDuration(1000);
-		        alphaAnimation2.setStartOffset(1000);
-		        animationSet.addAnimation(alphaAnimation2);		        
-		        animationSet.setAnimationListener(new warningAnimListener());
-		        warning.startAnimation(animationSet);
+				Toast toast = Toast.makeText(getApplicationContext(),"请输入选项再roll", Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.TOP, 0, 0);
+				toast.show();
 			}
 		}
 		
