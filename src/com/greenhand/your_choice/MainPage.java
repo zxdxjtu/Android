@@ -9,6 +9,7 @@ import com.renren.api.connect.android.Renren;
 import com.renren.api.connect.android.exception.RenrenAuthError;
 import com.renren.api.connect.android.view.RenrenAuthListener;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,7 +65,7 @@ public class MainPage extends Activity {
 	
 		renren.restorSessionKey(this);
 		
-		/////////////////////////////////////////////////
+   /////////////////////////////////////////////////
 		second = View.inflate(MainPage.this, R.layout.activity_second_page, null);
 		first = View.inflate(this, R.layout.activity_first_page, null);
 		
@@ -316,7 +317,12 @@ public class MainPage extends Activity {
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			//分享的代码
-	
+			ConnectivityManager con=(ConnectivityManager)getSystemService(Activity.CONNECTIVITY_SERVICE);  
+			boolean wifi=con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();  
+			boolean internet=con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();  
+			if(wifi|internet){  
+			    //执行相关操作  
+			
 			Toast.makeText(MainPage.this, "renren is"+renren, Toast.LENGTH_SHORT).show();
 			
 			if (renren.isSessionKeyValid()==false) {
@@ -355,7 +361,12 @@ public class MainPage extends Activity {
 				renren.requestJSON(bundle);
 			}
 			
-			
+			}
+			else{  
+			    Toast.makeText(getApplicationContext(),  
+			            "请您检查您的网络连接", Toast.LENGTH_LONG)  
+			            .show();  
+			}
 		}
 		
 	}
