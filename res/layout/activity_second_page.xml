@@ -10,7 +10,18 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/first_page"
         android:src="@drawable/second"/>
-    
+
+    <GridView
+        android:id="@+id/drawcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp" >
+        
+    </GridView>
     <TextView 
         android:id="@+id/TextView"
         android:layout_marginTop="20dp"

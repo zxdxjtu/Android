@@ -48,14 +48,14 @@ public class MainPage extends Activity {
 	private ArrayList<String> list;
 	private LinearLayout shan;
 	private SlyderView slyder;
+	private DrawView draw;
 	private GestureDetector gestures;
 	
 	private int nowAngle;//当前角度
 	private String dialogMessage;
 	AlertDialog mydialog;
-	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
-
 	
+	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,7 @@ public class MainPage extends Activity {
 		slyder = new SlyderView(this);
 		shan.addView(slyder);
 		
-		showInf = (TextView)findViewById(R.id.InfTextView);
-		showInf.setText("您输入的选项为："+s);
+		draw = new DrawView(this);
 		
 		buttonToRight = (ImageButton)findViewById(R.id.buttonToRight);
 		buttonToRight.setOnClickListener(new ButtonListenerToRight());
@@ -97,6 +96,15 @@ public class MainPage extends Activity {
 		nowAngle = 0;
 	}
 
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		showInf = (TextView)findViewById(R.id.InfTextView);
+		showInf.setText("您输入的选项为："+s);
+	}
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -179,6 +187,9 @@ public class MainPage extends Activity {
 			buttonToRight.setImageDrawable(getResources().getDrawable(R.drawable.toright1));
 			action.removeAllViews();
 			action.addView(second);
+//			draw.setDrawItem(list);
+			draw.setDrawView();
+			
 			showInf = (TextView)findViewById(R.id.InfTextView);
     		showInf.setText("您输入的选项为："+s);
 		}
@@ -239,9 +250,12 @@ public class MainPage extends Activity {
         			Gson gson = new Gson();
         			list = gson.fromJson(s, new TypeToken<ArrayList<String>>(){}.getType());
         			slyder.setdrgrees(list);
+        			draw.setDrawItem(list);
+        			if(findViewById(R.id.drawcontainer) != null)
+        			{
+        				draw.setDrawView();
+        			}
         		}
-//        		shan.removeAllViews();
-//        		shan.addView(slyder);
             	break;  
         	default:  
         		break;  
