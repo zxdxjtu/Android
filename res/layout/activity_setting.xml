@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:background="#f5efca"> 
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+       	android:background="@drawable/menu">
+       	<ImageButton 
+       	    android:id="@+id/settingBack"
+       	    android:layout_width="27dp"
+       	    android:layout_height="20dp"
+       	    android:scaleType="fitXY"
+       	    android:src="@drawable/toleft"
+       	    android:layout_centerVertical="true"
+       	    android:background="#00000000"
+       	    android:layout_marginLeft="10dp"/>
+       	<TextView
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_centerInParent="true"
+       	    android:text="设置" 
+       	    android:textColor="#ffffff"
+       	    android:textSize="20dp"/>
+    </RelativeLayout>
+    
+    <Button   
+    	android:id="@+id/settingMusicButton" 
+    	android:text="音乐:开 " 
+    	android:textSize="18sp"
+    	android:layout_width="match_parent"   
+    	android:layout_height="wrap_content"   
+    	android:background="@drawable/settingbuttonstyle" 
+    	android:textColor="#ffffff"
+    	android:layout_margin="15dp"/>
+     
+    <Button   
+    	android:id="@+id/settingSoundButton" 
+    	android:text="音效:开" 
+    	android:textSize="18sp"
+    	android:layout_width="match_parent"   
+    	android:layout_height="wrap_content"          
+    	android:background="@drawable/settingbuttonstyle"
+    	android:textColor="#ffffff"
+    	android:layout_margin="15dp" />
+    
+    <Button 
+        android:id="@+id/settingClearButton" 
+    	android:text="清空记录" 
+    	android:textSize="18sp"
+    	android:layout_width="match_parent"   
+    	android:layout_height="wrap_content"          
+    	android:background="@drawable/settingbuttonstyle"
+    	android:textColor="#ffffff"
+    	android:layout_margin="15dp" />
+     
+    <Button   
+    	android:id="@+id/settingScoreButton" 
+    	android:text="给我们评分" 
+    	android:textSize="18sp"
+   		android:layout_width="match_parent"   
+    	android:layout_height="wrap_content"         
+    	android:background="@drawable/settingbuttonstyle"
+    	android:textColor="#ffffff"
+    	android:layout_margin="15dp" /> 
+    	
+    <Button   
+    	android:id="@+id/settingAboutUsButton" 
+    	android:text="关于yourchoice " 
+    	android:textSize="18sp"
+    	android:layout_width="match_parent"   
+    	android:layout_height="wrap_content"         
+    	android:background="@drawable/settingbuttonstyle" 
+    	android:textColor="#ffffff"
+    	android:layout_margin="15dp"/> 
+</LinearLayout> 

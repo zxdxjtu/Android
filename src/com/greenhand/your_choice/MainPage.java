@@ -225,13 +225,14 @@ public class MainPage extends Activity {
 		
 	}
 	
-	//暂时将设置按钮用作数据库的清空按钮
 	class ButtonListenerSet implements OnClickListener{
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			DBhelper dbp = new DBhelper(MainPage.this);
-			dbp.clear();
+			Intent intent = new Intent();
+			intent.setClass(MainPage.this, Setting.class);
+			startActivityForResult(intent,0);
+			overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 		}
 	}
 	

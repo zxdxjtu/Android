@@ -12,14 +12,14 @@
         android:src="@drawable/second"/>
 
     <GridView
+        android:layout_marginTop="10dp"
         android:id="@+id/drawcontainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="270dp"
+        android:layout_height="fill_parent"
         android:columnWidth="90dp"
-        android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp" >
+        android:layout_centerHorizontal="true"
+        android:numColumns="3"
+        android:listSelector="@null">
         
     </GridView>
     <TextView 

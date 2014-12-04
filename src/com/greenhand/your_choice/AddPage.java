@@ -321,16 +321,6 @@ public class AddPage extends Activity{
 		}
 		
 	}
-//这里是删除数据库的代码，设置里可以用
-//	class clearButtonListener implements OnClickListener{
-//		@Override
-//		public void onClick(View arg0) {
-//			// TODO Auto-generated method stub
-//			DBhelper dbp = new DBhelper(AddPage.this);
-//			dbp.clear();
-//		}
-//		
-//	}
 	class addButtonListener implements OnClickListener{
 
 		@Override
