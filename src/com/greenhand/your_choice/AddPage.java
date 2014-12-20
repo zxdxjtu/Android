@@ -148,7 +148,7 @@ public class AddPage extends Activity{
 			String gridtextcontent;
 			String findstr = null;		
 			String s = arg0.toString();
-			System.out.println(s);
+//			System.out.println(s);
 			if(!listItem.isEmpty())
 			{
 				map = listItem.get(pos);
@@ -179,7 +179,7 @@ public class AddPage extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("gridÊä³ö"+findstr);
+//				System.out.println("gridÊä³ö"+findstr);
 				Gson gson = new Gson();
 				list = gson.fromJson(findstr, new TypeToken<ArrayList<String>>(){}.getType());
 				if(list == null)

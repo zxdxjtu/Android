@@ -1,26 +1,34 @@
 package com.greenhand.your_choice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.R.dimen;
+import com.renren.api.connect.android.Renren;
+import com.renren.api.connect.android.exception.RenrenAuthError;
+import com.renren.api.connect.android.view.RenrenAuthListener;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.util.TypedValue;
+import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DrawView 
 {
@@ -30,6 +38,10 @@ public class DrawView
 	private MainPage mainpage;
 	private int[] colos = new int[] {0xfed9c960,0xfe57c8c8,0xfe9fe558,0xfef6b000,0xfef46212,0xfecf2911,0xfe9d3011 };
 	private LayoutInflater mInflater;
+	private int[] order;
+	private AlertDialog mydialog;
+	private String dialogMessage;
+	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
 	
 	public DrawView(MainPage m) {
 		// TODO Auto-generated constructor stub
@@ -68,6 +80,7 @@ public class DrawView
 		}
 	}
 	
+	
 	public class drawAdapter extends SimpleAdapter
 	{
 		Context c;
@@ -78,7 +91,8 @@ public class DrawView
 			// TODO Auto-generated constructor stub
 			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			c = context;
-			
+			order = new int[drawItem.size()];
+			setorder();
 		}
 
 		@Override
@@ -120,9 +134,114 @@ public class DrawView
 			// TODO Auto-generated method stub
 			bg.setBackgroundResource(R.drawable.cover);
 			text.setVisibility(View.GONE);
-			container.startAnimation(changePostionAnim(pos, 4));
+			TranslateAnimation ta = changePostionAnim(pos, order[pos]);
+			container.startAnimation(ta);
+			if(pos == (drawItem.size()-1))
+				ta.setAnimationListener(new TransAnimListener());
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	public class drawAdapter2 extends SimpleAdapter
+	{
+		Context c;
+		public drawAdapter2(Context context,
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to) {
+			super(context, data, resource, from, to);
+			// TODO Auto-generated constructor stub
+			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			c = context;
+			order = new int[drawItem.size()];
+			setorder();
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			convertView = mInflater.inflate(R.layout.drawstyle, null);
+			View drawTextContainer = (View)convertView.findViewById(R.id.drawTextContainer);
+//			View drawTextBg = (View)convertView.findViewById(R.id.drawTextBg);
+			TextView drawText = (TextView)convertView.findViewById(R.id.drawText);
+			drawText.setVisibility(View.GONE);
+			TranslateAnimation ta = changePostionAnim(position, order[position]);
+			drawTextContainer.startAnimation(ta);
+			drawTextContainer.setOnClickListener(new cardClickListener(convertView));
+			return super.getView(position, convertView, parent);
+		}
+		
+	}
+	class cardClickListener implements OnClickListener{
+		
+		View c;
+		public cardClickListener(View convertView) {
+			// TODO Auto-generated constructor stub
+			c = convertView;
+		}
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			View drawTextBg = (View)c.findViewById(R.id.drawTextBg);
+			View drawText = (View)c.findViewById(R.id.drawText);
+			Animation animation = AnimationUtils.loadAnimation(mainpage,R.anim.front_scale);
+			animation.setAnimationListener(new drawToFrontAnimListener(drawTextBg,drawText));
+			arg0.startAnimation(animation);
+		}
+		
+	}
+	class drawToFrontAnimListener implements AnimationListener{
+
+		View textbg,text;
+		public drawToFrontAnimListener(View drawTextBg, View drawText) {
+			// TODO Auto-generated constructor stub
+			textbg = drawTextBg;
+			text = drawText;
+		}
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub
+			textbg.setBackgroundColor(colos[(int) (Math.random()*7)]);
+			text.setVisibility(View.VISIBLE);
+			TextView text1 = (TextView) text;
+			dialogMessage = (String) text1.getText();
+			showdialog();
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	class TransAnimListener implements AnimationListener{
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub
+			Collections.shuffle(drawItem);
+			drawAdapter2 myAdapter2 = new drawAdapter2(mainpage, drawItem, R.layout.drawstyle, 
+					new String[]{"drawText"}, new int[]{R.id.drawText});
+			drawGridView.setAdapter(myAdapter2);
 		}
 
 		@Override
@@ -147,24 +266,19 @@ public class DrawView
 		}
 		
 	}
-	public  Animation changePostionAnim(int pos1,int pos2)
+	public TranslateAnimation changePostionAnim(int pos1,int pos2)
 	{
 		mypointclass p1 = new mypointclass(pos1);
 		mypointclass p2 = new mypointclass(pos2);
-		mypointclass p = new mypointclass();
 		TranslateAnimation ta1 = new TranslateAnimation(
 				Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF, p2.x-p1.x, 
 				Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF, p2.y-p1.y);
-		ta1.setDuration(400);
-		ta1.setStartOffset(pos1*200);
-		ta1.setFillAfter(true);
-		TranslateAnimation ta2 = new TranslateAnimation(
-				Animation.RELATIVE_TO_SELF, p2.x-p1.x,Animation.RELATIVE_TO_SELF, 0f, 
-				Animation.RELATIVE_TO_SELF, p2.y-p1.y,Animation.RELATIVE_TO_SELF, 0f);
-		ta2.setDuration(400);
-		ta2.setStartOffset(pos1*200+(drawItem.size()+1)*200);
+		ta1.setDuration(300);
+		ta1.setStartOffset(pos1*150);
+//		ta1.setFillAfter(true);
 		return ta1;
 	}
+
 	class mypointclass
 	{
 		float x;
@@ -179,6 +293,123 @@ public class DrawView
 			y = pos/3;
 			x = pos%3;
 		}
+	}
+
+	public void setorder()
+	{
+		int size = drawItem.size();
+		int nowsize = size;
+		int target;
+		int randomnum;
+		for(int i=0;i<size;i++)
+			order[i] = -1;
+		for(int i=0;i<size;i++)
+		{
+			if(order[i] == -1)
+			{
+				randomnum = (int) (Math.random()*nowsize);
+//				System.out.println("randomnum = " + randomnum);
+				for(target=0;target<size;target++)
+				{
+					if(order[target] == -1)
+					{
+						randomnum--;
+						if(randomnum == -1)
+							break;
+					}
+				}
+//				System.out.println(target);
+				order[target] = i;
+				order[i] = target;
+				if(target == i)
+					nowsize--;
+				else
+					nowsize = nowsize-2;
+			}
+		}
+//		for(int i=0;i<drawItem.size();i++)
+//			System.out.println(order[i] + ",");
+	}
+	private void showdialog()
+	{
+		mydialog = new AlertDialog.Builder(mainpage).create();
+		mydialog.show();
+		Window dialogwindow = mydialog.getWindow();
+		dialogwindow.setContentView(R.layout.result_dialog);
+		Button ok = (Button)dialogwindow.findViewById(R.id.dialogok);
+		Button cancel = (Button)dialogwindow.findViewById(R.id.dialogcancel);
+		TextView message = (TextView)dialogwindow.findViewById(R.id.dialogmessage);
+		message.setText(dialogMessage);	
+		ok.setOnClickListener(new dialogOkListener());
+		cancel.setOnClickListener(new dialogCancelListener());
+	}
+	class dialogCancelListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			mydialog.dismiss();
+		}
+		
+	}
+	class dialogOkListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			//分享的代码
+			ConnectivityManager con=(ConnectivityManager)mainpage.getSystemService(Activity.CONNECTIVITY_SERVICE);  
+			boolean wifi=con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();  
+			boolean internet=con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();  
+			if(wifi|internet){  
+			    //执行相关操作  
+			
+			Toast.makeText(mainpage, "renren is"+renren, Toast.LENGTH_SHORT).show();
+			
+			if (renren.isSessionKeyValid()==false) {
+				renren.authorize(mainpage, new String[]{"status_update","photo_upload"},new RenrenAuthListener(){
+					@Override
+					public void onComplete(Bundle values) {
+						Bundle bundle=new Bundle();
+						bundle.putString("method", "status.set");
+						bundle.putString("status",dialogMessage);
+						renren.requestJSON(bundle);
+						Toast.makeText(mainpage, "onComplete", Toast.LENGTH_SHORT).show();
+					}
+					@Override
+					public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
+						Toast.makeText(mainpage, "onRenrenAuthError", Toast.LENGTH_SHORT).show();
+						System.out.println(renrenAuthError.getError()+renrenAuthError.getMessage()+renrenAuthError.getErrorDescription()+renrenAuthError.getLocalizedMessage());
+					}
+					@Override
+					public void onCancelLogin() {
+						Toast.makeText(mainpage, "onCancelLogin", Toast.LENGTH_SHORT).show();
+					}
+					@Override
+					public void onCancelAuth(Bundle values) {
+						Toast.makeText(mainpage, "onCancelAuth", Toast.LENGTH_SHORT).show();
+					}
+				});
+				
+			
+				
+			}
+			else
+			{
+				Bundle bundle=new Bundle();
+				bundle.putString("method", "status.set");
+				bundle.putString("status",dialogMessage);
+				renren.requestJSON(bundle);
+			}
+			
+			}
+			else{  
+			    Toast.makeText(mainpage.getApplicationContext(),  
+			            "请您检查您的网络连接", Toast.LENGTH_LONG)  
+			            .show();  
+			}
+		}
+		
 	}
 
 }

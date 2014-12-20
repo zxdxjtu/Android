@@ -42,7 +42,7 @@ public class MainPage extends Activity {
 	private RelativeLayout action;
 	private View first;
 	private View second;
-	private TextView showInf;
+//	private TextView showInf;
 	private String s;
 	private ArrayList<String> list;
 	private LinearLayout shan;
@@ -88,21 +88,21 @@ public class MainPage extends Activity {
 		addButton.setOnClickListener(new ButtonListenerAdd());	
 		
 		setButton = (ImageButton)findViewById(R.id.setButton);
-		setButton.setOnClickListener(new ButtonListenerSet());	//暂时将设置按钮用作数据库的清空按钮
+		setButton.setOnClickListener(new ButtonListenerSet());
 		
 		gestures = new GestureDetector(new turnTableListener());
 		
 		nowAngle = 0;
 	}
 
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		
-		showInf = (TextView)findViewById(R.id.InfTextView);
-		showInf.setText("您输入的选项为："+s);
-	}
+//	@Override
+//	protected void onStart() {
+//		// TODO Auto-generated method stub
+//		super.onStart();
+//		
+//		showInf = (TextView)findViewById(R.id.InfTextView);
+//		showInf.setText("您输入的选项为："+s);
+//	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -189,8 +189,8 @@ public class MainPage extends Activity {
 //			draw.setDrawItem(list);
 			draw.setDrawView();
 			
-			showInf = (TextView)findViewById(R.id.InfTextView);
-    		showInf.setText("您输入的选项为："+s);
+//			showInf = (TextView)findViewById(R.id.InfTextView);
+//    		showInf.setText("您输入的选项为："+s);
 		}
 		
 	}
@@ -205,8 +205,8 @@ public class MainPage extends Activity {
 			buttonToRight.setImageDrawable(getResources().getDrawable(R.drawable.toright));
 			action.removeAllViews();
 			action.addView(first);
-			showInf = (TextView)findViewById(R.id.InfTextView);
-    		showInf.setText("您输入的选项为："+s);
+//			showInf = (TextView)findViewById(R.id.InfTextView);
+//    		showInf.setText("您输入的选项为："+s);
 		}
 		
 	}
@@ -243,8 +243,8 @@ public class MainPage extends Activity {
 		{   
         	case 1:
         		s = data.getStringExtra("result");
-        		showInf = (TextView)findViewById(R.id.InfTextView);
-        		showInf.setText("您输入的选项为："+s);
+//        		showInf = (TextView)findViewById(R.id.InfTextView);
+//        		showInf.setText("您输入的选项为："+s);
         		if(s != null)
         		{
         			Gson gson = new Gson();
@@ -268,9 +268,9 @@ public class MainPage extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) 
         {
             new AlertDialog.Builder(this)
-            	.setTitle("prompt")
-            	.setMessage("are you sure to exit?")
-            	.setNegativeButton("cancle",
+            	.setTitle("您好！")
+            	.setMessage("您确定要退出吗？")
+            	.setNegativeButton("取消",
             			new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,int which) 
@@ -278,7 +278,7 @@ public class MainPage extends Activity {
                                 	
                                 }
                             })
-                .setPositiveButton("yes",
+                .setPositiveButton("退出",
                 		new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int whichButton) 
                                 {

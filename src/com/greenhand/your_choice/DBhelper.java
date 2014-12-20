@@ -60,7 +60,7 @@ public class DBhelper{
 			while(c.moveToNext())
 			{
 				datacount = c.getInt(0);
-				System.out.println("显示行数" + datacount);
+//				System.out.println("显示行数" + datacount);
 			}
 			if(datacount == 0)
 			{
@@ -110,7 +110,7 @@ public class DBhelper{
 						}
 						findstrsecond = sumjson.toString();
 						db.execSQL("update t_gather set gather ='" + findstrsecond +"' where ID = " + idsecond);
-						System.out.println("第一种添加 "+findstrsecond);
+//						System.out.println("第一种添加 "+findstrsecond);
 						findstrfirst = findstrsecond;
 						idfirst = idsecond;
 						break;
@@ -129,7 +129,7 @@ public class DBhelper{
 						}
 						findstrsecond = sumjson.toString();
 						db.execSQL("update t_gather set gather ='" + findstrsecond +"' where ID = " + idsecond);
-						System.out.println("第二种添加" + findstrsecond);
+//						System.out.println("第二种添加" + findstrsecond);
 						db.execSQL("delete from t_gather where ID = " + idfirst);
 						findstrfirst = findstrsecond;
 						idfirst = idsecond;
@@ -141,7 +141,7 @@ public class DBhelper{
 		if(!check)
 		{
 			db.execSQL("insert into t_gather (gather) values ('"+ s +"')");
-			System.out.println("从来没有的添加"+ s);
+//			System.out.println("从来没有的添加"+ s);
 		}
 		c.close();
 		db.close();
