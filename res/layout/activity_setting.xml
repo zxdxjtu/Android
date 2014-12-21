@@ -26,26 +26,7 @@
        	    android:textSize="20dp"/>
     </RelativeLayout>
     
-    <Button   
-    	android:id="@+id/settingMusicButton" 
-    	android:text="音乐:开 " 
-    	android:textSize="18sp"
-    	android:layout_width="match_parent"   
-    	android:layout_height="wrap_content"   
-    	android:background="@drawable/settingbuttonstyle" 
-    	android:textColor="#ffffff"
-    	android:layout_margin="15dp"/>
-     
-    <Button   
-    	android:id="@+id/settingSoundButton" 
-    	android:text="音效:开" 
-    	android:textSize="18sp"
-    	android:layout_width="match_parent"   
-    	android:layout_height="wrap_content"          
-    	android:background="@drawable/settingbuttonstyle"
-    	android:textColor="#ffffff"
-    	android:layout_margin="15dp" />
-    
+   
     <Button 
         android:id="@+id/settingClearButton" 
     	android:text="清空记录" 

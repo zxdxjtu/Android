@@ -350,7 +350,7 @@ public class MainPage extends Activity {
 					public void onComplete(Bundle values) {
 						Bundle bundle=new Bundle();
 						bundle.putString("method", "status.set");
-						bundle.putString("status",dialogMessage);
+						bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 						renren.requestJSON(bundle);
 						Toast.makeText(MainPage.this, "onComplete", Toast.LENGTH_SHORT).show();
 					}

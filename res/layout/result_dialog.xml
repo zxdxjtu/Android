@@ -4,7 +4,7 @@
     android:layout_height="wrap_content" >
     <LinearLayout 
         android:id="@+id/dialogmessagefield"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/dialogbg"
@@ -19,6 +19,7 @@
             android:id="@+id/dialogmessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text=""/>
         <TextView 
             android:layout_width="wrap_content"

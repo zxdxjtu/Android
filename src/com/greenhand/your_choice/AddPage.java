@@ -20,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,7 +30,6 @@ import android.widget.Toast;
 
 public class AddPage extends Activity{
 
-	private TextView warning;
 	private ListView inputListView;
 	private ListView chooseGridView;
 	private ImageButton backButton;
@@ -301,27 +298,7 @@ public class AddPage extends Activity{
 		}
 		
 	}
-	class warningAnimListener implements AnimationListener{
 
-		@Override
-		public void onAnimationEnd(Animation arg0) {
-			// TODO Auto-generated method stub
-			warning.setVisibility(View.GONE);
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onAnimationStart(Animation arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 	class addButtonListener implements OnClickListener{
 
 		@Override

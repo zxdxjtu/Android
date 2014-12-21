@@ -13,6 +13,8 @@ import com.renren.api.connect.android.view.RenrenAuthListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -384,6 +386,7 @@ public class DrawView
 	private void showdialog()
 	{
 		mydialog = new AlertDialog.Builder(mainpage).create();
+		mydialog.setOnCancelListener(new cancelListener());
 		mydialog.show();
 		Window dialogwindow = mydialog.getWindow();
 		dialogwindow.setContentView(R.layout.result_dialog);
@@ -393,6 +396,15 @@ public class DrawView
 		message.setText(dialogMessage);	
 		ok.setOnClickListener(new dialogOkListener());
 		cancel.setOnClickListener(new dialogCancelListener());
+	}
+	class cancelListener implements OnCancelListener{
+
+		@Override
+		public void onCancel(DialogInterface arg0) {
+			// TODO Auto-generated method stub
+			setDrawView();
+		}
+		
 	}
 	class dialogCancelListener implements OnClickListener{
 
@@ -424,7 +436,7 @@ public class DrawView
 					public void onComplete(Bundle values) {
 						Bundle bundle=new Bundle();
 						bundle.putString("method", "status.set");
-						bundle.putString("status",dialogMessage);
+						bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 						renren.requestJSON(bundle);
 						Toast.makeText(mainpage, "onComplete", Toast.LENGTH_SHORT).show();
 					}
