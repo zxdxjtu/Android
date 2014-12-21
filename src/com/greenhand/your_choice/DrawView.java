@@ -38,7 +38,9 @@ public class DrawView
 	private MainPage mainpage;
 	private int[] colos = new int[] {0xfed9c960,0xfe57c8c8,0xfe9fe558,0xfef6b000,0xfef46212,0xfecf2911,0xfe9d3011 };
 	private LayoutInflater mInflater;
-	private int[] order;
+	private int[] order1;
+	private int[] order2;
+	private int[] order3;
 	private AlertDialog mydialog;
 	private String dialogMessage;
 	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
@@ -91,8 +93,12 @@ public class DrawView
 			// TODO Auto-generated constructor stub
 			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			c = context;
-			order = new int[drawItem.size()];
-			setorder();
+			order1 = new int[drawItem.size()];
+			order2 = new int[drawItem.size()];
+			order3 = new int[drawItem.size()];
+			order1 = setorder(order1);
+			order2 = setorder(order2);
+			order3 = setorder(order3);
 		}
 
 		@Override
@@ -114,6 +120,32 @@ public class DrawView
 		}
 		
 	}
+	
+	public class drawAdapter2 extends SimpleAdapter
+	{
+		Context c;
+		public drawAdapter2(Context context,
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to) {
+			super(context, data, resource, from, to);
+			// TODO Auto-generated constructor stub
+			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			c = context;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			convertView = mInflater.inflate(R.layout.drawstyle, null);
+			View drawTextContainer = (View)convertView.findViewById(R.id.drawTextContainer);
+			TextView drawText = (TextView)convertView.findViewById(R.id.drawText);
+			drawText.setVisibility(View.GONE);
+			drawTextContainer.setOnClickListener(new cardClickListener(convertView));
+			return super.getView(position, convertView, parent);
+		}
+		
+	}
+	
 	class drawToBackAnimListener implements AnimationListener{
 
 		View container;
@@ -128,60 +160,25 @@ public class DrawView
 			bg = drawTextBg;
 			text = drawText;
 		}
-
 		@Override
 		public void onAnimationEnd(Animation arg0) {
 			// TODO Auto-generated method stub
 			bg.setBackgroundResource(R.drawable.cover);
 			text.setVisibility(View.GONE);
-			TranslateAnimation ta = changePostionAnim(pos, order[pos]);
+			TranslateAnimation ta = changePostionAnim(pos, order1[pos]);
 			container.startAnimation(ta);
-			if(pos == (drawItem.size()-1))
-				ta.setAnimationListener(new TransAnimListener());
+			ta.setAnimationListener(new TransAnimListener1(container,pos));
 		}
-
 		@Override
 		public void onAnimationRepeat(Animation arg0) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub		
 		}
-
 		@Override
 		public void onAnimationStart(Animation arg0) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub	
 		}
-		
 	}
-	public class drawAdapter2 extends SimpleAdapter
-	{
-		Context c;
-		public drawAdapter2(Context context,
-				List<? extends Map<String, ?>> data, int resource,
-				String[] from, int[] to) {
-			super(context, data, resource, from, to);
-			// TODO Auto-generated constructor stub
-			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			c = context;
-			order = new int[drawItem.size()];
-			setorder();
-		}
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			convertView = mInflater.inflate(R.layout.drawstyle, null);
-			View drawTextContainer = (View)convertView.findViewById(R.id.drawTextContainer);
-//			View drawTextBg = (View)convertView.findViewById(R.id.drawTextBg);
-			TextView drawText = (TextView)convertView.findViewById(R.id.drawText);
-			drawText.setVisibility(View.GONE);
-			TranslateAnimation ta = changePostionAnim(position, order[position]);
-			drawTextContainer.startAnimation(ta);
-			drawTextContainer.setOnClickListener(new cardClickListener(convertView));
-			return super.getView(position, convertView, parent);
-		}
-		
-	}
 	class cardClickListener implements OnClickListener{
 		
 		View c;
@@ -203,7 +200,8 @@ public class DrawView
 	}
 	class drawToFrontAnimListener implements AnimationListener{
 
-		View textbg,text;
+		View textbg;
+		View text;
 		public drawToFrontAnimListener(View drawTextBg, View drawText) {
 			// TODO Auto-generated constructor stub
 			textbg = drawTextBg;
@@ -233,15 +231,48 @@ public class DrawView
 		}
 		
 	}
-	class TransAnimListener implements AnimationListener{
+	class TransAnimListener1 implements AnimationListener{
+
+		View c;
+		int pos;
+		public TransAnimListener1(View container, int positon) {
+			// TODO Auto-generated constructor stub
+			c = container;
+			pos = positon;
+		}
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub
+			TranslateAnimation ta = changePostionAnim(pos, order2[pos]);
+			ta.setAnimationListener(new TransAnimListener2(c,pos));
+			c.startAnimation(ta);
+		}
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub	
+		}
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub	
+		}
+	}
+	class TransAnimListener2 implements AnimationListener{
+
+		View c;
+		int pos;
+		public TransAnimListener2(View container, int positon) {
+			// TODO Auto-generated constructor stub
+			c = container;
+			pos = positon;
+		}
 
 		@Override
 		public void onAnimationEnd(Animation arg0) {
 			// TODO Auto-generated method stub
-			Collections.shuffle(drawItem);
-			drawAdapter2 myAdapter2 = new drawAdapter2(mainpage, drawItem, R.layout.drawstyle, 
-					new String[]{"drawText"}, new int[]{R.id.drawText});
-			drawGridView.setAdapter(myAdapter2);
+			TranslateAnimation ta = changePostionAnim(pos, order3[pos]);
+			if(pos == (drawItem.size()-1))
+				ta.setAnimationListener(new TransAnimListener3());
+			c.startAnimation(ta);
 		}
 
 		@Override
@@ -256,6 +287,25 @@ public class DrawView
 			
 		}
 		
+	}
+	class TransAnimListener3 implements AnimationListener{
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			// TODO Auto-generated method stub	
+			Collections.shuffle(drawItem);
+			drawAdapter2 myAdapter2 = new drawAdapter2(mainpage, drawItem, R.layout.drawstyle, 
+				new String[]{"drawText"}, new int[]{R.id.drawText});
+			drawGridView.setAdapter(myAdapter2);
+		}
+		@Override
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub	
+		}
+		@Override
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
+		}
 	}
 	class drawClickListener implements OnClickListener{
 
@@ -274,8 +324,8 @@ public class DrawView
 				Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF, p2.x-p1.x, 
 				Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF, p2.y-p1.y);
 		ta1.setDuration(300);
-		ta1.setStartOffset(pos1*150);
-//		ta1.setFillAfter(true);
+//		ta1.setStartOffset(pos1*150);
+		ta1.setFillAfter(true);
 		return ta1;
 	}
 
@@ -295,7 +345,7 @@ public class DrawView
 		}
 	}
 
-	public void setorder()
+	public int[] setorder(int[] order)
 	{
 		int size = drawItem.size();
 		int nowsize = size;
@@ -329,6 +379,7 @@ public class DrawView
 		}
 //		for(int i=0;i<drawItem.size();i++)
 //			System.out.println(order[i] + ",");
+		return order;
 	}
 	private void showdialog()
 	{
@@ -349,6 +400,7 @@ public class DrawView
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			mydialog.dismiss();
+			setDrawView();
 		}
 		
 	}

@@ -54,6 +54,8 @@ public class MainPage extends Activity {
 	private String dialogMessage;
 	AlertDialog mydialog;
 	
+//	SoundPool sp;
+	
 	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
 	
 	@Override
@@ -93,6 +95,9 @@ public class MainPage extends Activity {
 		gestures = new GestureDetector(new turnTableListener());
 		
 		nowAngle = 0;
+		
+//		sp= new SoundPool(1,AudioManager.STREAM_MUSIC,5);
+//		sp.load(this,R.raw.zhuanpan,1);
 	}
 
 //	@Override
@@ -129,6 +134,7 @@ public class MainPage extends Activity {
 			{
 				if((xleft < e1.getX()) && (e1.getX()<xright) && (e1.getY() > ytop) && (e1.getY() < ybottom))
 				{
+//					playsound();
 					float x = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
 					float y = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
 					int rand = (int) (Math.random()*360);
@@ -335,8 +341,7 @@ public class MainPage extends Activity {
 			boolean wifi=con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();  
 			boolean internet=con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();  
 			if(wifi|internet){  
-			    //执行相关操作  
-			
+			    //执行相关操作  			
 			Toast.makeText(MainPage.this, "renren is"+renren, Toast.LENGTH_SHORT).show();
 			
 			if (renren.isSessionKeyValid()==false) {
@@ -362,10 +367,7 @@ public class MainPage extends Activity {
 					public void onCancelAuth(Bundle values) {
 						Toast.makeText(MainPage.this, "onCancelAuth", Toast.LENGTH_SHORT).show();
 					}
-				});
-				
-			
-				
+				});			
 			}
 			else
 			{
@@ -381,8 +383,10 @@ public class MainPage extends Activity {
 			            "请您检查您的网络连接", Toast.LENGTH_LONG)  
 			            .show();  
 			}
-		}
-		
+		}		
 	}
-
+//	public void playsound()
+//	{
+//		sp.play(1,1, 1, 0, 0, 1);
+//	}
 }

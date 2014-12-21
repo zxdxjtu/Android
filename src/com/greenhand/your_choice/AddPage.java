@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.JSONException;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -139,7 +140,7 @@ public class AddPage extends Activity{
 			pos = position;
 		}
 
-		@SuppressLint("NewApi")
+//		@SuppressLint("NewApi")
 		@Override
 		public void afterTextChanged(Editable arg0) {
 			// TODO Auto-generated method stub

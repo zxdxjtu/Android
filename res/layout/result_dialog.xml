@@ -34,12 +34,12 @@
             	android:id="@+id/dialogcancel"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
-            	android:text="亚美爹"/>
+            	android:text="再来一次"/>
         	<Button 
         	    android:id="@+id/dialogok"
         	    android:layout_width="wrap_content"
         	    android:layout_height="wrap_content"
-        	    android:text="一哭搜"/>
+        	    android:text="    分享    "/>
     	</LinearLayout>
     </LinearLayout>
     <ImageView 
