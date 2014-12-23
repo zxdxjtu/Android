@@ -2,8 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="#f5efca">
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/first"
+        android:scaleType="centerCrop"/>
   	<RelativeLayout 
   	    android:id="@+id/addpagebar"
         android:layout_width="match_parent"
@@ -35,8 +39,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:divider="#f5efca"
-        android:dividerHeight="10dp">
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:cacheColorHint="@null">
             
     </ListView>
 
@@ -74,7 +79,8 @@
 	    android:layout_marginLeft="10dp"
 	    android:layout_marginRight="10dp"
 	    android:layout_marginTop="10dp"
-	    android:divider="#f5efca"
-        android:dividerHeight="10dp">    
+	    android:divider="@null"
+        android:dividerHeight="10dp"
+        android:cacheColorHint="@null">
 	</ListView>
 </RelativeLayout>

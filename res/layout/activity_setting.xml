@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?> 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/first"
+        android:scaleType="centerCrop"/>
+<LinearLayout 
     android:orientation="vertical" 
     android:layout_width="match_parent" 
-    android:layout_height="match_parent" 
-    android:background="#f5efca"> 
+    android:layout_height="match_parent">"
     <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -26,7 +33,6 @@
        	    android:textSize="20dp"/>
     </RelativeLayout>
     
-   
     <Button 
         android:id="@+id/settingClearButton" 
     	android:text="清空记录" 
@@ -57,3 +63,4 @@
     	android:textColor="#ffffff"
     	android:layout_margin="15dp"/> 
 </LinearLayout> 
+</RelativeLayout>

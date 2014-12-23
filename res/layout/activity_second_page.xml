@@ -4,12 +4,10 @@
     android:layout_height="match_parent" >
     
     <ImageView
-        android:id="@+id/firstbackground"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/first_page"
-        android:src="@drawable/second"/>
+        android:src="@drawable/first"/>
 
     <GridView
         android:layout_marginTop="10dp"

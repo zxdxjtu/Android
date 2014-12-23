@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:background="#f5efca" >
+    android:background="@null">
 
     <ImageView
         android:id="@+id/addpagechoose2part"
@@ -19,7 +19,7 @@
         android:layout_height="30dp"
         android:background="@drawable/addpagechoose2corners"
         android:gravity="center_vertical"
-        android:text="wewqeqeeqwe"
+        android:text=""
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>
     

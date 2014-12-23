@@ -75,16 +75,19 @@ public class DrawView
 		// TODO Auto-generated method stub
 		if(list != null)
 		{
+			String temptext;
 			drawItem = new ArrayList<HashMap<String, Object>>();
 			for(int i=0;i<list.size();i++)
 			{
 				map = new HashMap<String, Object>();
-				map.put("drawText", list.get(i));
+				temptext = list.get(i);
+				if(temptext.length() > 5)
+					temptext = temptext.substring(0, 4) + "бн";
+				map.put("drawText", temptext);
 				drawItem.add(map);
 			}
 		}
 	}
-	
 	
 	public class drawAdapter extends SimpleAdapter
 	{
