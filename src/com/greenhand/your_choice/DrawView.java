@@ -45,9 +45,9 @@ public class DrawView
 	private int[] order3;
 	private AlertDialog mydialog;
 	private String dialogMessage;
-	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
+	final Renren renren;
 	
-	public DrawView(MainPage m) {
+	public DrawView(MainPage m, Renren rr) {
 		// TODO Auto-generated constructor stub
 		if(drawItem == null)
 		{
@@ -60,6 +60,7 @@ public class DrawView
 			}
 		}
 		mainpage = m;
+		renren = rr;
 	}
 	
 	public void setDrawView()
@@ -462,7 +463,7 @@ public class DrawView
 			{
 				Bundle bundle=new Bundle();
 				bundle.putString("method", "status.set");
-				bundle.putString("status",dialogMessage);
+				bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 				renren.requestJSON(bundle);
 			}
 			
@@ -472,6 +473,8 @@ public class DrawView
 			            "请您检查您的网络连接", Toast.LENGTH_LONG)  
 			            .show();  
 			}
+			mydialog.dismiss();
+			setDrawView();
 		}
 		
 	}

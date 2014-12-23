@@ -54,8 +54,6 @@ public class MainPage extends Activity {
 	private String dialogMessage;
 	AlertDialog mydialog;
 	
-//	SoundPool sp;
-	
 	final Renren renren=new Renren("fee11992a4ac4caabfca7800d233f814");
 	
 	@Override
@@ -77,7 +75,7 @@ public class MainPage extends Activity {
 		slyder = new SlyderView(this);
 		shan.addView(slyder);
 		
-		draw = new DrawView(this);
+		draw = new DrawView(this,renren);
 		
 		buttonToRight = (ImageButton)findViewById(R.id.buttonToRight);
 		buttonToRight.setOnClickListener(new ButtonListenerToRight());
@@ -373,7 +371,7 @@ public class MainPage extends Activity {
 			{
 				Bundle bundle=new Bundle();
 				bundle.putString("method", "status.set");
-				bundle.putString("status",dialogMessage);
+				bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 				renren.requestJSON(bundle);
 			}
 			
@@ -383,10 +381,7 @@ public class MainPage extends Activity {
 			            "请您检查您的网络连接", Toast.LENGTH_LONG)  
 			            .show();  
 			}
-		}		
+			mydialog.dismiss();
+		}
 	}
-//	public void playsound()
-//	{
-//		sp.play(1,1, 1, 0, 0, 1);
-//	}
 }
