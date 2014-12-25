@@ -16,8 +16,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar"
-  >
+        android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
             android:name="com.greenhand.your_choice.Login"
             android:label="@string/app_name" >
@@ -35,6 +34,15 @@
             android:name="com.greenhand.your_choice.AddPage"
             android:label="@string/app_name" >
         </activity>
+        <activity 
+            android:name="com.greenhand.your_choice.Setting"
+            android:label="@string/app_name">
+            
+        </activity>
+        <activity 
+            android:name="com.greenhand.your_choice.AboutPage"
+            android:label="@string/app_name">
+            
+    	</activity>
     </application>
-  
 </manifest>

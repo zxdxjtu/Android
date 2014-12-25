@@ -10,38 +10,41 @@
         android:layout_height="match_parent"
         android:layout_width="0dp"
         />
-    
-    <ImageView
+    <RelativeLayout 
         android:id="@+id/menuPic"
-        android:scaleType="fitXY"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/menu" />
+       	android:background="@drawable/menu">
+       	<TextView 
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_centerInParent="true"
+       	    android:text="YOUR CHOICE" 
+       	    android:textColor="#ffffff"
+       	    android:textSize="20dp"/>
     
 	<ImageButton
         android:id="@+id/addButton"
-       	android:layout_alignTop="@id/menuPic"
-       	android:layout_alignRight="@id/leftline"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginRight="29dp"
-        android:layout_marginTop="8dp"
         android:background="#00000000"
         android:contentDescription="@string/add"
-        android:src="@drawable/addbutton" />
+        android:src="@drawable/addbutton"
+        android:layout_alignParentRight="true" 
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"/>
     
     <ImageButton
         android:id="@+id/setButton"
-		android:layout_alignTop="@id/menuPic"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="29dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
         android:background="#00000000"
         android:contentDescription="@string/add"
         android:src="@drawable/setbutton" />
+    
+    </RelativeLayout>
 	
     <ImageView
 	    android:id="@+id/naviPic"
@@ -58,7 +61,7 @@
         android:layout_alignRight="@id/leftline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="8dp"
         android:background="#00000000"
         android:contentDescription="@string/ToRight"
@@ -69,7 +72,7 @@
 		android:layout_alignTop="@id/naviPic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="8dp"
         android:background="#00000000"
         android:contentDescription="@string/ToLeft" 
