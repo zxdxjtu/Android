@@ -340,7 +340,7 @@ public class MainPage extends Activity {
 			boolean internet=con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();  
 			if(wifi|internet){  
 			    //执行相关操作  			
-			Toast.makeText(MainPage.this, "renren is"+renren, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(MainPage.this, "renren is"+renren, Toast.LENGTH_SHORT).show();
 			
 			if (renren.isSessionKeyValid()==false) {
 				renren.authorize(MainPage.this, new String[]{"status_update","photo_upload"},new RenrenAuthListener(){
@@ -350,20 +350,20 @@ public class MainPage extends Activity {
 						bundle.putString("method", "status.set");
 						bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 						renren.requestJSON(bundle);
-						Toast.makeText(MainPage.this, "onComplete", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainPage.this, "分享成功", Toast.LENGTH_SHORT).show();
 					}
 					@Override
 					public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
-						Toast.makeText(MainPage.this, "onRenrenAuthError", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainPage.this, "登陆失败", Toast.LENGTH_SHORT).show();
 						System.out.println(renrenAuthError.getError()+renrenAuthError.getMessage()+renrenAuthError.getErrorDescription()+renrenAuthError.getLocalizedMessage());
 					}
 					@Override
 					public void onCancelLogin() {
-						Toast.makeText(MainPage.this, "onCancelLogin", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainPage.this, "取消登陆", Toast.LENGTH_SHORT).show();
 					}
 					@Override
 					public void onCancelAuth(Bundle values) {
-						Toast.makeText(MainPage.this, "onCancelAuth", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainPage.this, "取消认证", Toast.LENGTH_SHORT).show();
 					}
 				});			
 			}
@@ -373,6 +373,7 @@ public class MainPage extends Activity {
 				bundle.putString("method", "status.set");
 				bundle.putString("status","YOUR CHOICE帮我选中了" + dialogMessage + "!妈妈再也不用担心我的选择强迫症啦！！");
 				renren.requestJSON(bundle);
+				Toast.makeText(MainPage.this, "分享成功", Toast.LENGTH_SHORT).show();
 			}
 			
 			}
